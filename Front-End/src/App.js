@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import TagsCloud from "./layout/TagsCloud";
 
 const App = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <TagsCloud />
     </div>
   );
 };
