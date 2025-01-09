@@ -26,10 +26,11 @@ body {
 
 .tags-cloud {
   position: fixed;
-  top: calc(50% - 30vmin);
-  left: calc(50% - 30vmin);
-  height: 60vmin;
-  width: 60vmin;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vmin;
+  width: 80vmin;
   list-style: none;
   opacity: 0;
 }
@@ -52,4 +53,18 @@ body {
 .tags-cloud > .tag > .wrap {
   display: inline-block;
   transform: translateX(-50%) translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  .tags-cloud {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 70vmin;
+    width: 70vmin;
+  }
+
+  .tags-cloud > .tag {
+    font-size: 5vmin;
+  }
 }

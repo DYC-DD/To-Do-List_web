@@ -167,6 +167,11 @@ const TagsCloudComponent = () => {
           "To-Do List",
           "To-Do List",
           "To-Do List",
+          "To-Do List",
+          "To-Do List",
+          "To-Do List",
+          "To-Do List",
+          "To-Do List",
         ].map((tag, index) => (
           <li key={index} className="tag">
             <span className="wrap">{tag}</span>
