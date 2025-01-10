@@ -5,7 +5,6 @@ import "../styles/TagsCloud.css";
 class FibonacciSphere {
   constructor(N) {
     this.points = [];
-
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
     for (let i = 0; i < N; i++) {
@@ -14,7 +13,6 @@ class FibonacciSphere {
       const a = goldenAngle * i;
       const x = Math.cos(a) * radius;
       const z = Math.sin(a) * radius;
-
       this.points.push([x, y, z]);
     }
   }
@@ -26,9 +24,9 @@ class TagsCloud {
     this.size = this.root.offsetWidth;
     this.tags = root.querySelectorAll(".tag");
     this.sphere = new FibonacciSphere(this.tags.length);
-    this.rotationAxis = [1, 0, 0];
-    this.rotationAngle = 0;
-    this.rotationSpeed = 0;
+    this.rotationAxis = [0.707, 0.707, 0]; // 預設旋轉軸
+    this.rotationAngle = 0; // 初始旋轉角度
+    this.rotationSpeed = 0.005; // 旋轉速度
 
     this.updatePositions();
     this.initEventListeners();
@@ -37,7 +35,13 @@ class TagsCloud {
 
   initEventListeners() {
     window.addEventListener("resize", this.updatePositions.bind(this));
-    document.addEventListener("mousemove", this.onMouseMove.bind(this));
+    if (!this.isMobile()) {
+      document.addEventListener("mousemove", this.onMouseMove.bind(this));
+    }
+  }
+
+  isMobile() {
+    return window.innerWidth <= 768;
   }
 
   updatePositions() {
@@ -84,6 +88,7 @@ class TagsCloud {
       const translateX = (this.size * transformedX) / 2;
       const translateY = (this.size * transformedY) / 2;
       const scale = (transformedZ + 2) / 3;
+
       const transform = `translateX(${translateX}px) translateY(${translateY}px) scale(${scale})`;
       const opacity = (transformedZ + 1.5) / 2.5;
 
@@ -107,13 +112,11 @@ class TagsCloud {
 
   update() {
     this.rotationAngle += this.rotationSpeed;
-
     this.updatePositions();
   }
 
   start() {
     this.update();
-
     this.frameRequestId = requestAnimationFrame(this.start.bind(this));
   }
 
@@ -123,33 +126,29 @@ class TagsCloud {
 }
 
 const TagsCloudComponent = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const root = document.querySelector(".tags-cloud");
     const cloud = new TagsCloud(root);
+
+    if (cloud.isMobile()) {
+      cloud.rotationSpeed = 0.008;
+    }
+
     cloud.start();
-
-    const cursor = document.getElementById("cursor");
-    let isActivated = false;
-
-    const handleMouseMove = (e) => {
-      if (!isActivated) {
-        cursor.classList.add("-activated");
-        isActivated = true;
-      }
-      cursor.style.transform = `translateX(${e.clientX}px) translateY(${e.clientY}px)`;
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       cloud.stop();
-      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
+  const handleClick = () => {
+    navigate("/home");
+  };
+
   return (
-    <>
-      <div id="cursor"></div>
+    <div className="tags-container" onClick={handleClick}>
       <ul className="tags-cloud">
         {[
           "To-Do List",
@@ -178,7 +177,7 @@ const TagsCloudComponent = () => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
