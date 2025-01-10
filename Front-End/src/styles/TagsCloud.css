@@ -24,6 +24,10 @@ body {
   cursor: pointer;
 }
 
+.tags-container {
+  background: #181a1b;
+}
+
 .tags-cloud {
   position: fixed;
   top: 50%;
