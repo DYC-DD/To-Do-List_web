@@ -31,7 +31,7 @@ body {
 .tags-cloud {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 48%;
   transform: translate(-50%, -50%);
   height: 80vmin;
   width: 80vmin;
@@ -62,10 +62,10 @@ body {
 @media (max-width: 768px) {
   .tags-cloud {
     top: 50%;
-    left: 50%;
+    left: 47%;
     transform: translate(-50%, -50%);
-    height: 70vmin;
-    width: 70vmin;
+    height: 90vmin;
+    width: 90vmin;
   }
 
   .tags-cloud > .tag {
