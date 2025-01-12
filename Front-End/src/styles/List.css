@@ -1,9 +1,12 @@
 :root {
-  --color-purple: #8b5cf6;
-  --color-pink: #ec4899;
-  --color-gray: #9ca3af;
-  --color-black: #1f2937;
   --card-size: 23rem;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .carousel {
@@ -33,13 +36,25 @@
 .card {
   width: 100%;
   height: 100%;
-  padding: 2rem;
-  background-color: hsl(280deg, 40%, calc(100% - var(--abs-offset) * 50%));
+  padding: 1rem;
+  background-color: hsl(0deg, 0%, calc(100% - var(--abs-offset) * 80%));
   border-radius: 1rem;
   margin-top: 2rem;
-  color: var(--color-gray);
-  text-align: justify;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
   transition: all 0.3s ease-out;
+  position: relative;
+}
+
+.card h2,
+.card p {
+  word-wrap: break-word;
+  max-width: 90%;
 }
 
 .card h2 {
@@ -47,21 +62,19 @@
   font-size: 2rem;
   font-weight: bold;
   margin: 0 0 0.7em;
-  color: var(--color-black);
+  color: #1f2937;
 }
 
-.card p,
-.card h2 {
-  transition: all 0.3s ease-out;
-  opacity: var(--active);
+.card p {
+  color: #1f2937 !important;
 }
 
 .nav {
   color: white;
   font-size: 5rem;
   position: absolute;
-  top: 50%; /* 垂直居中 */
-  transform: translateY(-50%); /* 修正位置 */
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 2;
   cursor: pointer;
   user-select: none;
@@ -70,9 +83,55 @@
 }
 
 .nav.left {
-  left: -5rem; /* 在卡片左側 */
+  left: -5rem;
 }
 
 .nav.right {
-  right: -5rem; /* 在卡片右側 */
+  right: -5rem;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  :root {
+    --card-size: 18rem;
+  }
+
+  .carousel {
+    width: var(--card-size);
+    height: var(--card-size);
+  }
+
+  .card {
+    padding: 1rem;
+  }
+  .card h2 {
+    font-size: 1.4rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --card-size: 14rem;
+  }
+
+  .carousel {
+    width: var(--card-size);
+    height: var(--card-size);
+  }
+
+  .card {
+    padding: 0.8rem;
+  }
+  .card h2 {
+    font-size: 1.2rem;
+  }
+  .card p {
+    font-size: 0.8rem;
+  }
 }

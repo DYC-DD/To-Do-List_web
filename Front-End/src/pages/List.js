@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
-import "../styles/List.css"; // 样式文件
+import "../styles/List.css";
 
-const CARDS = 10; // 卡片數量
 const MAX_VISIBILITY = 3; // 最大可見卡片數量
+const SWIPE_THRESHOLD = 50; // 判定為滑動的像素閾值，可自行調整
 
 // 卡片組件
 const Card = ({ title, content }) => (
@@ -13,24 +13,58 @@ const Card = ({ title, content }) => (
   </div>
 );
 
-// Carousel 主組件
+// 卡片資料陣列
+const cardsData = [
+  { title: "Card 1", content: "This is the content for card 1." },
+  { title: "Card 2", content: "This is the content for card 2." },
+  { title: "Card 3", content: "This is the content for card 3." },
+  { title: "Card 4", content: "This is the content for card 4." },
+  { title: "Card 5", content: "This is the content for card 5." },
+  { title: "Card 6", content: "This is the content for card 6." },
+  { title: "Card 7", content: "This is the content for card 7." },
+];
+
 const Carousel = () => {
   const [active, setActive] = useState(0); // 活動卡片索引
 
+  const touchStartX = useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchEndX - touchStartX.current;
+
+    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
+      if (diffX < 0 && active < cardsData.length - 1) {
+        setActive((prev) => prev + 1);
+      } else if (diffX > 0 && active > 0) {
+        setActive((prev) => prev - 1);
+      }
+    }
+    touchStartX.current = null;
+  };
+
   return (
-    <div className="carousel">
-      {/* 左側導航按鈕 */}
+    <div
+      className="carousel"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {active > 0 && (
         <button
-          className="nav left"
+          className="nav left desktop-only"
           onClick={() => setActive((prev) => prev - 1)}
         >
           <TiChevronLeftOutline />
         </button>
       )}
 
-      {/* 卡片內容渲染 */}
-      {[...new Array(CARDS)].map((_, i) => (
+      {cardsData.map((card, i) => (
         <div
           key={i}
           className="card-container"
@@ -44,17 +78,13 @@ const Carousel = () => {
             display: Math.abs(active - i) > MAX_VISIBILITY ? "none" : "block",
           }}
         >
-          <Card
-            title={`Card ${i + 1}`}
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
+          <Card title={card.title} content={card.content} />
         </div>
       ))}
 
-      {/* 右側導航按鈕 */}
-      {active < CARDS - 1 && (
+      {active < cardsData.length - 1 && (
         <button
-          className="nav right"
+          className="nav right desktop-only"
           onClick={() => setActive((prev) => prev + 1)}
         >
           <TiChevronRightOutline />

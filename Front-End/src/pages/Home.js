@@ -47,55 +47,11 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let lastScrollY = 0; // 上一次滾動位置
-    let totalScrolledDistance = 0; // 記錄總滾動距離
-    const scrollDistanceThreshold = 100; // 設置滾動觸發的距離閾值
-    let hasScrolledToAnchor = false; // 控制是否已經滾動到錨點
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY; // 當前滾動位置
-      const carouselElement = document.getElementById("carousel-anchor");
-
-      // 計算本次滾動的距離（向下滾動時累加）
-      if (currentScrollY > lastScrollY) {
-        totalScrolledDistance += currentScrollY - lastScrollY; // 向下滾動累加距離
-      } else {
-        totalScrolledDistance = 0; // 向上滾動時重置距離
-      }
-
-      // 檢查是否超過閾值並執行錨點滾動
-      if (
-        totalScrolledDistance > scrollDistanceThreshold && // 超過滾動距離閾值
-        carouselElement &&
-        !hasScrolledToAnchor // 未滾動到錨點
-      ) {
-        hasScrolledToAnchor = true; // 設置標誌，避免重複觸發
-        carouselElement.scrollIntoView({ behavior: "smooth" });
-
-        // 延遲重置標誌，允許再次滾動
-        setTimeout(() => {
-          hasScrolledToAnchor = false;
-        }, 2000); // 2秒後允許再次觸發
-      }
-
-      lastScrollY = currentScrollY; // 更新上一次滾動位置
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div className="home noto-sans-sc">
       <main>
         <h1 className="typing-text">{displayedText}</h1>
-        <div id="carousel-anchor">
-          <Carousel />
-        </div>
+        <Carousel />
         <div className="text-content">
           <p>
             你這個觀點我不敢苟同啊我個人認為義大利麵就應該拌42號混泥土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。你往裡砸的時候，一瞬間它就會產生大量的高能蛋白，俗稱UFO，會嚴重影響經濟的發展，以至於對整個太平洋，和充電器的核污染。再或者說透過這勾股定理很容易推斷出人工飼養的東條英雞，他是可以捕獲野生的三角函數，所以說不管這秦始皇的切面是否具有放射性，川普的N次方是否有沈澱物，都不會影響到沃爾瑪跟維爾康在南極匯合。
