@@ -40,6 +40,10 @@ body {
   margin-top: 4rem;
 }
 
+.card-content {
+  height: 100vh;
+}
+
 .home main p {
   width: 1000px;
   margin-inline: auto;
@@ -75,6 +79,11 @@ body.footer-pull .home main {
   white-space: nowrap;
   font-size: 70px;
   animation: blink-caret 0.7s step-end infinite;
+}
+
+.snap-section {
+  position: relative;
+  margin-top: 0px;
 }
 
 @keyframes blink-caret {

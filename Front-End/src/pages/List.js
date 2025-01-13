@@ -2,10 +2,9 @@ import React, { useState, useRef } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import "../styles/List.css";
 
-const MAX_VISIBILITY = 3; // 最大可見卡片數量
-const SWIPE_THRESHOLD = 50; // 判定為滑動的像素閾值，可自行調整
+const MAX_VISIBILITY = 4;
+const SWIPE_THRESHOLD = 50;
 
-// 卡片組件
 const Card = ({ title, content }) => (
   <div className="card">
     <h2>{title}</h2>
@@ -13,7 +12,6 @@ const Card = ({ title, content }) => (
   </div>
 );
 
-// 卡片資料陣列
 const cardsData = [
   { title: "Card 1", content: "This is the content for card 1." },
   { title: "Card 2", content: "This is the content for card 2." },
@@ -25,7 +23,7 @@ const cardsData = [
 ];
 
 const Carousel = () => {
-  const [active, setActive] = useState(0); // 活動卡片索引
+  const [active, setActive] = useState(0);
 
   const touchStartX = useRef(null);
 
