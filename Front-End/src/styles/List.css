@@ -1,5 +1,5 @@
 :root {
-  --card-size: 23rem;
+  --card-size: 40rem;
 }
 
 body,
@@ -84,10 +84,12 @@ html {
 
 .nav.left {
   left: -5rem;
+  transform: translate(-20%, -20%);
 }
 
 .nav.right {
   right: -5rem;
+  transform: translate(20%, -20%);
 }
 
 @media (max-width: 768px) {
@@ -117,7 +119,7 @@ html {
 
 @media (max-width: 480px) {
   :root {
-    --card-size: 14rem;
+    --card-size: 16rem;
   }
 
   .carousel {
